@@ -98,6 +98,7 @@ async def get_hierarchy(
                         axo_bucket_id = ao.axo_bucket_id,
                         axo_source_bucket_id = ao.axo_source_bucket_id,
                         axo_sink_bucket_id = ao.axo_sink_bucket_id,
+                        axo_endpoint_id = ao.axo_endpoint_id,
                         version=ao.axo_version,
                         functions=functions_dto,
                     )

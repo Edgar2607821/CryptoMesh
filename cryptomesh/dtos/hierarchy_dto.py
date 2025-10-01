@@ -21,6 +21,7 @@ class ActiveObjectHierarchyDTO(BaseModel):
     axo_bucket_id: str
     axo_source_bucket_id: str
     axo_sink_bucket_id: str
+    axo_endpoint_id: Optional[str] = None
     version: int
     functions: List[FunctionHierarchyDTO] = []
 
