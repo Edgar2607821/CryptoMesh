@@ -18,8 +18,13 @@ class ActiveObjectHierarchyDTO(BaseModel):
     active_object_id: str
     object_name: str
     alias: Optional[str] = None
+    axo_bucket_id: str
+    axo_source_bucket_id: str
+    axo_sink_bucket_id: str
     version: int
     functions: List[FunctionHierarchyDTO] = []
+
+
 
 class MicroserviceHierarchyDTO(BaseModel):
     microservice_id: str
