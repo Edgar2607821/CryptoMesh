@@ -154,25 +154,29 @@ async def deploy_endpoint(
     dto:EndpointCreateDTO,
     svc: EndpointsService = Depends(get_endpoints_service)
 ):
-    t1 = T.time()
-    model = dto.to_model()
-    created = await svc.create_endpoint(model)
-    res = await svc.deploy(endpoint_id=created.endpoint_id)
+    t1            = T.time()
+    model         = dto.to_model()
+    endpoint_id   = model.endpoint_id
+    deploy_result = await svc.deploy(model = model)
     
-    if res.is_err:
-        del_res = await svc.delete_endpoint(endpoint_id=created.endpoint_id)
+    if deploy_result.is_err:
+        del_res = await svc.delete_endpoint(endpoint_id=endpoint_id)
         L.error({
             "event": "API.ENDPOINT.DEPLOY_FAILED",
-            "endpoint_id": created.endpoint_id,
+            "endpoint_id": endpoint_id,
             "delete": del_res.is_ok,
-            "detail": str(res.unwrap_err())
+            "detail": str(deploy_result.unwrap_err())
         })
         raise HTTPException(
             status_code=500,
-            detail=f"Failed to deploy endpoint: {created.endpoint_id} - {res.unwrap_err()}"
+            detail=f"Failed to deploy endpoint: {endpoint_id} - {deploy_result.unwrap_err()}"
         )
 
-    elapsed = round(T.time() - t1, 4)
+    deploy_response = deploy_result.unwrap()
+    model.pubsub_port  = deploy_response.pubsub_port
+    model.req_res_port = deploy_response.req_res_port
+    created         = await svc.create_endpoint(model)
+    elapsed         = round(T.time() - t1, 4)
     L.info({
         "event": "API.ENDPOINT.DEPLOYED",
         "endpoint_id": created.endpoint_id,

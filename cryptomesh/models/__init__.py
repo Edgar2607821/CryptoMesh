@@ -54,6 +54,9 @@ class EndpointModel(BaseModel):
     resources: ResourcesModel # resource_id
     security_policy: str  # sp_id
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    protocol: Optional[str] = "tcp"
+    req_res_port: Optional[int] = None
+    pubsub_port: Optional[int] = None
     policy_id: Optional[str] = None #reference to yaml policy
     active_object_id: Optional[str] = None
     envs:Optional[Dict[str,str]] = Field(default={})

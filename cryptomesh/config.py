@@ -6,12 +6,13 @@ MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/cryptomes
 MONGO_DATABASE_NAME = os.environ.get("MONGO_DATABASE_NAME", "cryptomesh")
 
 # API Settings
-CRYPTO_MESH_HOST = os.environ.get("CRYPTO_MESH_HOST", "0.0.0.0")
-CRYPTO_MESH_PORT = int(os.environ.get("CRYPTO_MESH_PORT", "19000"))
-CRYPTO_MESH_TITLE = os.environ.get("CRYPTO_MESH_TITLE", "CryptoMesh API")
-CRYPTO_MESH_API_PREFIX = os.environ.get("CRYPTO_MESH_API_PREFIX", "/api/v1")
-CRYPTO_MESH_VERSION = os.environ.get("CRYPTO_MESH_VERSION", "1.0.0")
-
+CRYPTO_MESH_HOST              = os.environ.get("CRYPTO_MESH_HOST", "0.0.0.0")
+CRYPTO_MESH_PORT              = int(os.environ.get("CRYPTO_MESH_PORT", "19000"))
+CRYPTO_MESH_TITLE             = os.environ.get("CRYPTO_MESH_TITLE", "CryptoMesh API")
+CRYPTO_MESH_API_PREFIX        = os.environ.get("CRYPTO_MESH_API_PREFIX", "/api/v1")
+CRYPTO_MESH_VERSION           = os.environ.get("CRYPTO_MESH_VERSION", "1.0.0")
+CRYPTOMESH_ENDPOINT_REQ_RES_BASE_PORT = int(os.environ.get("CRYPTOMESH_ENDPOINT_REQ_RES_BASE_PORT", "40000"))
+CRYPTOMESH_ENDPOINT_PUBSUB_BASE_PORT   = int(os.environ.get("CRYPTOMESH_ENDPOINT_PUBSUB_BASE_PORT", "50000"))
 # Debugging
 CRYPTO_MESH_DEBUG = bool(int(os.environ.get("CRYPTO_MESH_DEBUG", "1")))
 

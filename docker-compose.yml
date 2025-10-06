@@ -21,7 +21,7 @@ services:
 
   crypto-mesh-api:
     image: cryptomesh:api
-    # build: .
+    build: .
     container_name: crypto-mesh-api
     depends_on:
       - crypto-mesh-db
