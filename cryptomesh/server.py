@@ -46,6 +46,7 @@ app.include_router(Controllers.roles_router, prefix=config.CRYPTO_MESH_API_PREFI
 app.include_router(Controllers.endpoint_state_router, prefix=config.CRYPTO_MESH_API_PREFIX, tags=["Endpoint State"])
 app.include_router(Controllers.function_state_router, prefix=config.CRYPTO_MESH_API_PREFIX, tags=["Function State"])
 app.include_router(Controllers.function_result_router, prefix=config.CRYPTO_MESH_API_PREFIX, tags=["Function Result"])
+app.include_router(Controllers.choreography_router, prefix=config.CRYPTO_MESH_API_PREFIX, tags=["Choreogaphy_Run"])
 if __name__ == "__main__":
     uvicorn.run(app, host=config.CRYPTO_MESH_HOST, port=config.CRYPTO_MESH_PORT)
 
