@@ -41,9 +41,6 @@ class StorageService:
         model.axo_class_name = axo_class_name
         model.axo_bucket_id  = axo_bucket_id
         model.axo_key        = axo_key
-
-
-        
         
         # For now keep the dict but when we have more time we create a DTO
         # to handle this metadata
