@@ -16,6 +16,20 @@ CRYPTOMESH_ENDPOINT_PUBSUB_BASE_PORT   = int(os.environ.get("CRYPTOMESH_ENDPOINT
 # Debugging
 CRYPTO_MESH_DEBUG = bool(int(os.environ.get("CRYPTO_MESH_DEBUG", "1")))
 
+SHIELDX_API_PREFIX = os.environ.get("SHIELDX_API_PREFIX", "/api/v1")
+SHIELDX_HOST = os.environ.get("SHIELDX_HOST", "0.0.0.0")
+SHIELDX_PORT = int(os.environ.get("SHIELDX_PORT", "20000"))
+
+# ========================
+# Configuración de ShieldX Client
+# ========================
+SHIELDX_CLIENT_BASE_URL = os.environ.get(
+    "SHIELDX_CLIENT_BASE_URL",
+    f"http://{SHIELDX_HOST}:{SHIELDX_PORT}{SHIELDX_API_PREFIX}"
+)
+
+
+
 # Logging Configuration
 CRYPTO_MESH_LOG_PATH = os.environ.get("CRYPTO_MESH_LOG_PATH", "./logs")
 CRYPTO_MESH_LOG_LEVEL = os.environ.get("CRYPTO_MESH_LOG_LEVEL", "DEBUG")
