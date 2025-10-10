@@ -8,22 +8,26 @@ from cryptomesh.log.logger import get_logger
 L = get_logger(__name__)
 router = APIRouter()
 
+def get_choreography_service(db=Depends(get_database)) -> ChoreographyRunService:
+    return ChoreographyRunService(db)
 
 @router.post(
     "/choreography/run",
     summary="Ejecuta una coreografía enriqueciendo el grafo con información de despliegue",
     status_code=status.HTTP_202_ACCEPTED,
 )
-async def run_choreography(graph: GraphSpecDTO, db=Depends(get_database)):
+async def run_choreography(
+    graph: GraphSpecDTO, 
+    service: ChoreographyRunService = Depends(get_choreography_service)
+    # db=Depends(get_database)
+):
     """Recibe el grafo lógico, lo enriquece con información de despliegue y lo envía a ShieldX."""
 
     L.info({"event": "CHOREOGRAPHY.RUN.START", "nodes": len(graph.vertices)})
-
-    service = ChoreographyRunService(db)
-
     try:
         enriched_graph = await service.enrich_graph(graph)
         response = await service.send_to_shieldx(enriched_graph)
+        print("RESPONSE SHIELDX:", response)
     except Exception as e:
         L.error({
             "event": "CHOREOGRAPHY.RUN.ERROR",

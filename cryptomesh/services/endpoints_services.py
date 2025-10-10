@@ -66,10 +66,10 @@ class EndpointsService:
         req_res_port = config.CRYPTOMESH_ENDPOINT_REQ_RES_BASE_PORT + count
         pubsub_port  = config.CRYPTOMESH_ENDPOINT_PUBSUB_BASE_PORT + count
         # 
-
+      
         envs = {
             # --- AXO core ---
-            "AXO_ENDPOINT_ID": model.envs.get("AXO_ENDPOINT_ID", "axo-endpoint-0"),
+            "AXO_ENDPOINT_ID": endpoint_id,
             "AXO_GOSSIP_BIND_HOST": model.envs.get("AXO_GOSSIP_BIND_HOST", "0.0.0.0"),
             "AXO_GOSSIP_PORT": model.envs.get("AXO_GOSSIP_PORT", "7777"),
             "AXO_HEARTBEAT_INTERVAL": model.envs.get("AXO_HEARTBEAT_INTERVAL", "5.0"),
@@ -91,7 +91,7 @@ class EndpointsService:
             "AXO_PROTOCOL": model.envs.get("AXO_PROTOCOL", "tcp"),
             "AXO_PUB_SUB_PORT": str(pubsub_port),
             "AXO_REQ_RES_PORT": str(req_res_port),
-            "AXO_HOSTNAME": model.envs.get("AXO_HOSTNAME", "127.0.0.1"),
+            "AXO_HOSTNAME": model.envs.get("AXO_HOSTNAME", "0.0.0.0"),
             "AXO_SUBSCRIBER_HOSTNAME": model.envs.get("AXO_SUBSCRIBER_HOSTNAME", "*"),
             "AXO_ENDPOINTS": model.envs.get("AXO_ENDPOINTS", ""),  # space-separated
             "AXO_HEATER_MAX_IDLE_TIME": model.envs.get("AXO_HEATER_MAX_IDLE_TIME", "1h"),
@@ -124,7 +124,7 @@ class EndpointsService:
 
         # print("PORT",x_port)
         payload = SummonContainerPayload(
-            container_id  = model.endpoint_id,
+            container_id  = endpoint_id,
             cpu_count     = model.resources.cpu,
             envs          = envs,
             exposed_ports = [
@@ -132,9 +132,9 @@ class EndpointsService:
                 ExposedPort(host_port=pubsub_port,container_port=pubsub_port,ip_addr=None, protocolo=None),
             ],
             force         = True,
-            hostname      = model.endpoint_id,
+            hostname      = endpoint_id,
             image         = model.image,
-            ip_addr       = model.endpoint_id,
+            ip_addr       = endpoint_id,
             labels        = {"crypytomesh":"1", "type":"axo-endpoint"},
             memory        = HF.parse_size(model.resources.ram),
             mounts        = [

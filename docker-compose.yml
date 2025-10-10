@@ -3,7 +3,7 @@ services:
     image: mongo:latest
     container_name: crypto-mesh-db
     ports:
-      - "${MONGO_PORT:-27017}:27017"
+      - "${MONGO_PORT:-27018}:27017"
     volumes:
       - mongo-data:/data/db
     restart: unless-stopped
@@ -38,6 +38,7 @@ services:
       MONGO_DATABASE_NAME: ${MONGODB_DATABASE_NAME:-cryptomesh}
       MONGODB_URI: ${MONGODB_URI:-mongodb://crypto-mesh-db:27017/cryptomesh}
       MICTLANX_LOG_PATH: "/app/logs"
+      LOG_PATH: "/app/logs"
       MICTLANX_URI: "mictlanx://mictlanx-router-0@mictlanx-router-0:60666?/api_version=4&protocol=http"
       AXO_LOG_PATH: "/app/logs"
     # volumes:

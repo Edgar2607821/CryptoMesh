@@ -26,7 +26,7 @@ RUN pip install --no-cache-dir poetry
 COPY pyproject.toml poetry.lock* ./
 
 # Instalar dependencias del proyecto
-RUN poetry install --without dev --no-root
+RUN poetry lock && poetry install --without dev --no-root
 
 # Copiar resto del servicio
 COPY . .

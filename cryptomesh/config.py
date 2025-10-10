@@ -17,7 +17,7 @@ CRYPTOMESH_ENDPOINT_PUBSUB_BASE_PORT  = int(os.environ.get("CRYPTOMESH_ENDPOINT_
 CRYPTO_MESH_DEBUG = bool(int(os.environ.get("CRYPTO_MESH_DEBUG", "1")))
 
 SHIELDX_API_PREFIX = os.environ.get("SHIELDX_API_PREFIX", "/api/v1")
-SHIELDX_HOST       = os.environ.get("SHIELDX_HOST", "0.0.0.0")
+SHIELDX_HOST       = os.environ.get("SHIELDX_HOST", "localhost")
 SHIELDX_PORT       = int(os.environ.get("SHIELDX_PORT", "20000"))
 
 # ========================
