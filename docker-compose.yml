@@ -10,14 +10,7 @@ services:
     networks:
       - cryptomesh-net
 
-  # This service is commented out for now. Uncomment if RabbitMQ is needed. 
-  # crypto-mesh-broker:
-  #   image: rabbitmq:4.0-management
-  #   container_name: crypto-mesh-broker
-  #   ports:
-  #     - "${RABBITMQ_PORT:-5672}:5672"
-  #     - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
-  #   restart: unless-stopped
+
 
   crypto-mesh-api:
     image: cryptomesh:api
@@ -46,7 +39,14 @@ services:
     restart: unless-stopped
     networks:
       - cryptomesh-net
-
+  # This service is commented out for now. Uncomment if RabbitMQ is needed. 
+  # crypto-mesh-broker:
+  #   image: rabbitmq:4.0-management
+  #   container_name: crypto-mesh-broker
+  #   ports:
+  #     - "${RABBITMQ_PORT:-5672}:5672"
+  #     - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+  #   restart: unless-stopped
 volumes:
   mongo-data:
   # cryptomesh-vol:
