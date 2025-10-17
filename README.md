@@ -108,10 +108,41 @@ docker-compose down
 
 **Environment Variables**
 
-- `MONGO_PORT`: The port on your local machine that maps to the MongoDB container (default `27018`). Use this to connect to the database from your host.  
-- `RABBITMQ_PORT`: The port on your local machine that maps to the RabbitMQ broker (default `5673`). This is used by applications to send and receive messages.  
-- `RABBITMQ_MANAGEMENT_PORT`: The port on your local machine that maps to the RabbitMQ Management UI (default `15673`). Access the web interface for monitoring queues, exchanges, and connections.  
-- `API_PORT`: The port on your local machine that maps to the CryptoMesh API container (default `19000`). Use this to send HTTP requests to the API.
+Create a `.env` file (or `.env.staging` / `.env.prod`) with the following variables:
+
+### API Settings
+- `CRYPTOMESH_HOST`: Host where the API will run (default `0.0.0.0`)
+- `CRYPTOMESH_PORT`: Port for the API (default `19000`)
+- `CRYPTOMESH_MAX_CPU`: Max CPU cores the API can use (default `4`)
+- `CRYPTOMESH_MAX_RAM`: Max RAM in GB (default `8`)
+- `CRYPTOMESH_DEBUG`: Enable debug mode (`1` for true, `0` for false)
+- `CRYPTOMESH_TITLE`: Title of the API (default `CryptoMesh API`)
+- `CRYPTOMESH_API_PREFIX`: Prefix for API routes (default `/api/v1`)
+- `CRYPTOMESH_VERSION`: API version (default `1.0.0`)
+
+### MongoDB Settings
+- `CRYPTOMESH_MONGO_PORT`: Port on the host mapping to MongoDB container (default `27018`)
+- `CRYPTOMESH_MONGO_DATABASE_NAME`: Database name (default `cryptomesh`)
+- `CRYPTOMESH_MONGODB_URI`: MongoDB connection URI (default `mongodb://crypto-mesh-db:27017/cryptomesh`)
+
+### Logging
+- `CRYPTOMESH_LOG_PATH`: Directory for logs (default `./logs`)
+- `CRYPTOMESH_LOG_LEVEL`: Log level (`DEBUG`, `INFO`, etc.)
+- `CRYPTOMESH_LOG_ROTATION_WHEN`: Rotation period unit (`h` for hour, `m` for minute)
+- `CRYPTOMESH_LOG_ROTATION_INTERVAL`: Interval for log rotation (default `10`)
+- `CRYPTOMESH_LOG_TO_FILE`: Write logs to file (`1` yes, `0` no)
+- `CRYPTOMESH_LOG_ERROR_FILE`: Save errors to a separate file (`1` yes, `0` no)
+
+### MictlanX Router
+- `CRYPTOMESH_SUMMONER_IP_ADDR`: Hostname or IP of the MictlanX Summoner (default `mictlanx-summoner-0`)
+- `CRYPTOMESH_MICTLANX_URI`: URI for MictlanX Router (e.g., `mictlanx://mictlanx-router-0@mictlanx-router-0:60666?/api_version=4&protocol=http`)
+- `CRYPTOMESH_MICTLANX_LOG_PATH`: Path for MictlanX logs (default `/app/logs`)
+
+### Axo Logging (Optional)
+- `CRYPTOMESH_AXO_LOG_PATH`: Path for Axo logs (default `/app/logs`)
+
+
+
 
 **Logs**
 - API logs are saved in the `./logs` directory thanks to the mounted volume.
