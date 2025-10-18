@@ -1,26 +1,16 @@
-set -euo pipefail
+#!/bin/bash
 
 # Nombre base de la imagen
-IMAGE_NAME="leogarcia10/cryptomesh"
+IMAGE_NAME=${1:-"cryptomesh:api"}
+PUSH_FLAG=${2:-false}
 
-# Verificar que se pase un tag
-if [ $# -lt 1 ]; then
-  echo "Uso: $0 <tag_github>"
-  echo "Ejemplo: $0 v0.0.1-alpha"
-  exit 1
-fi
-
-GITHUB_TAG="$1"
-
-# Transformar tag GitHub a convención de Docker
-VERSION="${GITHUB_TAG#v}"
-# Reemplazar
-VERSION="${VERSION/-alpha/a0}"
-VERSION="${VERSION/-beta/b0}"
-VERSION="${VERSION/-rc/rc0}"
 
 # Construcción de la imagen
-echo "🚀 Construyendo imagen Docker: $IMAGE_NAME:api-$VERSION"
-docker build -t "$IMAGE_NAME:api-$VERSION" .
+echo "🚀 Building docker image: $IMAGE_NAME"
+docker build -f ./Dockerfile -t $IMAGE_NAME .
 
-echo "✅ Imagen construida correctamente: $IMAGE_NAME:api-$VERSION"
+if [ "$PUSH_FLAG" == true ]; then
+    echo "📤 Pushing the image after build"
+    docker push $IMAGE_NAME
+    exit 0;
+fi

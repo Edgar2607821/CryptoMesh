@@ -1,7 +1,9 @@
 services:
-  crypto-mesh-db:
+  cryptomesh-db:
     image: mongo:latest
-    container_name: crypto-mesh-db
+    container_name: cryptomesh-db
+    env_file:
+      - .env.dev
     ports:
       - "${CRYPTOMESH_MONGO_PORT:-27018}:27017"
     volumes:
@@ -12,28 +14,17 @@ services:
 
 
 
-  crypto-mesh-api:
+  cryptomesh-api:
     image: cryptomesh:api
     build: .
-    container_name: crypto-mesh-api
+    container_name: cryptomesh-api
     depends_on:
-      - crypto-mesh-db
-      # - crypto-mesh-broker
+      - cryptomesh-db
     command: ["uvicorn", "cryptomesh.server:app", "--host", "0.0.0.0", "--port", "19000"]
     ports:
       - "${CRYPTOMESH_PORT:-19000}:19000"
-    environment:
-      CRYPTOMESH_HOST: ${CRYPTOMESH_HOST:-0.0.0.0}
-      CRYPTOMESH_PORT: ${CRYPTOMESH_PORT:-19000}
-      CRYPTOMESH_SUMMONER_IP_ADDR: mictlanx-summoner-0
-      CRYPTOMESH_MAX_CPU: ${CRYPTOMESH_MAX_CPU:-4} 
-      CRYPTOMESH_MAX_RAM: ${CRYPTOMESH_MAX_RAM:-8}  
-      CRYPTOMESH_MONGO_DATABASE_NAME: ${CRYPTOMESH_MONGO_DATABASE_NAME:-cryptomesh}
-      CRYPTOMESH_MONGODB_URI: ${CRYPTOMESH_MONGODB_URI:-mongodb://crypto-mesh-db:27017/cryptomesh}
-      CRYPTOMESH_MICTLANX_LOG_PATH: "/app/logs"
-      CRYPTOMESH_LOG_PATH: "/app/logs"
-      CRYPTOMESH_MICTLANX_URI: "mictlanx://mictlanx-router-0@mictlanx-router-0:60666?/api_version=4&protocol=http"
-      CRYPTOMESH_AXO_LOG_PATH: "/app/logs"
+    env_file:
+      - .env.dev
     # volumes:
       # - cryptomesh-vol:/app
     restart: unless-stopped

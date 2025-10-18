@@ -1,4 +1,6 @@
 #!/bin/bash
+readonly IMAGE_NAME=${1:-"cryptomesh:api"}
+
 docker network create -d bridge cryptomesh-net || true  
 echo "CryptoMesh network is ready"
 # Deploy the MictlanX router
@@ -7,8 +9,8 @@ echo "Deploying MictlanX router..."
 
 docker compose -f ./docker-compose.yml down || true
 echo "Building and deploying CryptoMesh service..."
-chmod +x ./rebuild.sh && ./rebuild.sh
-docker compose -f docker-compose.yml up -d --build
+chmod +x ./rebuild.sh && ./rebuild.sh $IMAGE_NAME
+# docker compose -f docker-compose.yml up -d --build
 echo "CryptoMesh service was deployed..."
 
 # API="http://localhost:19000/docs"
