@@ -25,7 +25,8 @@ def get_endpoints_service() -> EndpointsService:
         ip_addr     = os.environ.get("CRYPTOMESH_SUMMONER_IP_ADDR","localhost"),
         api_version = int(os.environ.get("CRYPTOMESH_SUMMONER_API_VERSION","3")),
         port        = int(os.environ.get("CRYPTOMESH_SUMMONER_PORT","15000")),
-        protocol    = os.environ.get("CRYPTOMESH_SUMMONER_PROTOCOL","http")
+        protocol    = os.environ.get("CRYPTOMESH_SUMMONER_PROTOCOL","http"),
+        mode        = os.environ.get("CRYPTOMESH_SUMMONER_MODE","docker"),
     )
     return EndpointsService(repository, security_policy_service, summoner_params=x)
 
