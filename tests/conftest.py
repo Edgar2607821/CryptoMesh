@@ -17,7 +17,7 @@ from cryptomesh.db import connect_to_mongo, close_mongo_connection, get_client,g
 from httpx import AsyncClient, ASGITransport
 from cryptomesh.server import app
 
-TEST_DB = os.environ.get("MONGO_DATABASE_NAME","cryptomesh_test")
+TEST_DB = os.environ.get("CRYPTOMESH_MONGO_DATABASE_NAME ","cryptomesh_test")
 # ───────────────────────────────
 # Session‑scoped Event Loop
 # ───────────────────────────────
