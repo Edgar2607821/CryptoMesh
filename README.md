@@ -147,6 +147,66 @@ Create a `.env` file (or `.env.staging` / `.env.prod`) with the following variab
 **Logs**
 - API logs are saved in the `./logs` directory thanks to the mounted volume.
 
+### Automating Docker Image Build and Publication
+
+Now that you can run ShieldX locally using Docker Compose, you can also automate the image build and publication process using scripts and GitHub Actions.
+
+#### 🧱 Local Build (build.sh)
+
+To build the image locally and deploy the full stack (API + MongoDB + RabbitMQ), simply run:
+
+```bash
+./build.sh [IMAGE_NAME] [IMAGE_TAG]
+```
+
+**Example:**
+
+```bash
+./build.sh cryptomesh api-0.0.1a0
+```
+
+This command will:
+
+* Build the Docker image `leodan/cryptomesh-api:0.0.1a0`
+* Restart the stack using `docker-compose.yml`
+* Display a custom ASCII banner during build
+
+If no version is specified, `latest` will be used automatically.
+
+---
+
+#### 🚀 Automatic Publish via GitHub Actions
+
+A dedicated GitHub Action automatically builds and pushes the Docker image to Docker Hub whenever a new tag is created.
+
+**Workflow file:**
+
+```
+.github/workflows/docker-publish.yml
+```
+
+**Trigger condition:**
+
+```yaml
+on:
+  push:
+    tags:
+      - "*"
+```
+
+**How it works:**
+
+1. When a tag is pushed (e.g. `0.0.1a0`), the Action runs automatically.
+2. It builds the image using the repository Dockerfile.
+3. It logs in to Docker Hub using secrets.
+4. It pushes the tagged image to the public registry.
+
+**Example:**
+
+```bash
+git tag 0.0.1a0
+git push origin 0.0.1a0
+```
 
 ## Running Tests
 
