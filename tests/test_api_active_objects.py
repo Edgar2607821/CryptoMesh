@@ -23,7 +23,7 @@ def axo_storage_service() -> MictlanXStorageService:
 
 
 @pytest_asyncio.fixture(scope="session", autouse=True)
-# @pytest.mark.asyncio
+@pytest.mark.asyncio
 async def before_all_tests(axo_storage_service: MictlanXStorageService ):
     # ss = MictlanXStorageService(
         # bucket_id   = "b1",
@@ -66,7 +66,7 @@ async def test_create_active_object_with_code_generates_schema_and_functions(cli
     # payload["axo_code"] = get_valid_code()  # aseguramos string válido
 
     res = await client.post("/api/v1/active-objects/", json=payload)
-    assert res.status_code == 201, res.text
+    assert res.status_code == 201
     data = res.json()
     print("DATA",data)
     # Verifica que se haya generado schema

@@ -1,13 +1,20 @@
 from fastapi import FastAPI
 import cryptomesh.controllers as Controllers
-import uvicorn
 from contextlib import asynccontextmanager
 from cryptomesh.db import connect_to_mongo,close_mongo_connection
 import time as T
 from cryptomesh.log.logger import get_logger
 from cryptomesh import config
 from fastapi.middleware.cors import CORSMiddleware
-print("Starting CryptoMesh API...")
+from dotenv import load_dotenv
+import os
+
+CRYPTOMESH_ENV_FILE = os.environ.get("CRYPTOMESH_ENV_FILE",".env")
+if os.path.exists(CRYPTOMESH_ENV_FILE):
+    load_dotenv(CRYPTOMESH_ENV_FILE)
+
+
+
 L =  get_logger("CryptoMesh-server")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -47,6 +54,8 @@ app.include_router(Controllers.endpoint_state_router, prefix=config.CRYPTOMESH_A
 app.include_router(Controllers.function_state_router, prefix=config.CRYPTOMESH_API_PREFIX, tags=["Function State"])
 app.include_router(Controllers.function_result_router, prefix=config.CRYPTOMESH_API_PREFIX, tags=["Function Result"])
 app.include_router(Controllers.choreography_router, prefix=config.CRYPTOMESH_API_PREFIX, tags=["Choreogaphy_Run"])
+
+
 # if __name__ == "__main__":
     # uvicorn.run(app, host=config.CRYPTOMESH_HOST, port=config.CRYPTOMESH_PORT)
 

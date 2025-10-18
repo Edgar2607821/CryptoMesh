@@ -1,4 +1,9 @@
 import os
+from dotenv import load_dotenv
+CRYPTOMESH_ENV_FILE = os.environ.get("CRYPTOMESH_ENV_FILE",".env")
+exists = os.path.exists(CRYPTOMESH_ENV_FILE)
+if exists:
+    load_dotenv(CRYPTOMESH_ENV_FILE)
 # Base Configuration for CryptoMesh
 
 # MongoDB Settings
