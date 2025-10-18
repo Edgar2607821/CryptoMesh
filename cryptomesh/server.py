@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import uvicorn
 import cryptomesh.controllers as Controllers
 from contextlib import asynccontextmanager
 from cryptomesh.db import connect_to_mongo,close_mongo_connection
@@ -55,7 +56,6 @@ app.include_router(Controllers.function_state_router, prefix=config.CRYPTOMESH_A
 app.include_router(Controllers.function_result_router, prefix=config.CRYPTOMESH_API_PREFIX, tags=["Function Result"])
 app.include_router(Controllers.choreography_router, prefix=config.CRYPTOMESH_API_PREFIX, tags=["Choreogaphy_Run"])
 
-
-# if __name__ == "__main__":
-    # uvicorn.run(app, host=config.CRYPTOMESH_HOST, port=config.CRYPTOMESH_PORT)
+if __name__ == "__main__":
+    uvicorn.run(app, host=config.CRYPTOMESH_HOST, port=config.CRYPTOMESH_PORT)
 
