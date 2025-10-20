@@ -61,8 +61,22 @@ class EndpointsService:
 
     async def deploy(self,model:EndpointModel,dependencies:List[str]=[],network_id:str = "axo-net",selected_node:str= None)->Result[DeployedEndpointDTO,CryptoMeshError]:
         endpoint_id  = model.endpoint_id
+
+        max_limit_endpoints = config.CRYPTOMESH_MAX_DEPLOYED_ENDPOINTS
+        
+        # Verificar límite antes de desplegar
+        count = await self.repository.count()
+        if isinstance(max_limit_endpoints, int) and count >= max_limit_endpoints:
+            msg = f"You have reached the max limit of deployed endpoints ({max_limit_endpoints})."
+            L.warning({
+                "event": "ENDPOINT.DEPLOY.LIMIT_REACHED",
+                "current_count": count,
+                "limit": max_limit_endpoints,
+                "detail": msg
+            })
+            raise CryptoMeshError(message=msg, code=429)
+
         # Incremental port assignment based on existing endpoints
-        count        = await self.repository.count()
         req_res_port = config.CRYPTOMESH_ENDPOINT_REQ_RES_BASE_PORT + count
         pubsub_port  = config.CRYPTOMESH_ENDPOINT_PUBSUB_BASE_PORT + count
         # 

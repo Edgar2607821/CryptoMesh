@@ -115,6 +115,7 @@ Create a `.env` file (or `.env.staging` / `.env.prod`) with the following variab
 - `CRYPTOMESH_PORT`: Port for the API (default `19000`)
 - `CRYPTOMESH_MAX_CPU`: Max CPU cores the API can use (default `4`)
 - `CRYPTOMESH_MAX_RAM`: Max RAM in GB (default `8`)
+- `CRYPTOMESH_MAX_DEPLOYED_ENDPOINTS`: Maximum number of endpoints that can be deployed simultaneously (default `2`)
 - `CRYPTOMESH_DEBUG`: Enable debug mode (`1` for true, `0` for false)
 - `CRYPTOMESH_TITLE`: Title of the API (default `CryptoMesh API`)
 - `CRYPTOMESH_API_PREFIX`: Prefix for API routes (default `/api/v1`)
