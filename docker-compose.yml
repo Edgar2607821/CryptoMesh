@@ -15,7 +15,7 @@ services:
 
 
   crypto-mesh-api:
-    image: cryptomesh:api-0.0.1a0
+    image: ${CRYPTOMESH_API_IMAGE:-cryptomesh:api}
     build: 
       context: .
       dockerfile: Dockerfile
