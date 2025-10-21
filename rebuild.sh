@@ -1,4 +1,6 @@
-readonly IMAGE_NAME=${1:-"cryptomesh:api"}
+readonly IMAGE_NAME=${1:-cryptomesh:api}
+
+export CRYPTOMESH_API_IMAGE=$IMAGE_NAME
 echo "🚀 Building docker image: $IMAGE_NAME"
 docker build -f ./Dockerfile -t $IMAGE_NAME .
 echo "Shutting down existing cryptomesh service..."

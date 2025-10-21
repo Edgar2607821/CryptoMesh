@@ -9,6 +9,7 @@ set -euo pipefail
 #   ./deploy.sh [COMPOSE_FILE] [PROJECT_NAME] [COMPOSE_PROFILES] [flags]
 #
 # Args:
+#   IMAGE             : docker image, e.g: "cryptomesh:api" (by default "cryptomesh:api")
 #   COMPOSE_FILE      : docker-compose.yml por defecto
 #   PROJECT_NAME      : "cryptomesh" por defecto
 #   COMPOSE_PROFILES  : perfiles opcionales, ej: "api,dev"
@@ -21,9 +22,10 @@ set -euo pipefail
 #   ./deploy.sh docker-compose.yml cryptomesh "api"
 #   ./deploy.sh docker-compose.prod.yml cryptomesh "" --no-rebuild
 
-COMPOSE_FILE=${1:-"docker-compose.yml"}
-PROJECT_NAME=${2:-"cryptomesh"}
-COMPOSE_PROFILES=${3:-""}
+readonly IMAGE=${1:-cryptomesh:api}
+COMPOSE_FILE=${2:-"docker-compose.yml"}
+PROJECT_NAME=${3:-"cryptomesh"}
+COMPOSE_PROFILES=${4:-""}
 
 # Flags
 NO_REBUILD=false
@@ -81,31 +83,15 @@ else
   exit 1
 fi
 
-# ----------------------------------------------------
-# 3) Reiniciar stack de CryptoMesh
-# ----------------------------------------------------
-info "Apagando stack previo (si existe)…"
-docker compose -p "${PROJECT_NAME}" -f "${COMPOSE_FILE}" down || true
 
 # Rebuild opcional
-if ! $NO_REBUILD; then
   if [[ -x "./rebuild.sh" ]]; then
     info "Ejecutando ./rebuild.sh …"
-    ./rebuild.sh
+    ./rebuild.sh $IMAGE
   else
     warn "./rebuild.sh no encontrado o no ejecutable. Continuando sin rebuild."
   fi
-fi
 
-# ----------------------------------------------------
-# 4) Levantar servicios
-# ----------------------------------------------------
-info "Levantando servicios con Docker Compose…"
-if [[ -n "${COMPOSE_PROFILES}" ]]; then
-  COMPOSE_PROFILES="${COMPOSE_PROFILES}" docker compose -p "${PROJECT_NAME}" -f "${COMPOSE_FILE}" up -d --build
-else
-  docker compose -p "${PROJECT_NAME}" -f "${COMPOSE_FILE}" up -d --build
-fi
 
 ok "✅ CryptoMesh service was deployed successfully!"
 
