@@ -167,9 +167,14 @@ async def deploy_endpoint(
             "delete": del_res.is_ok,
             "detail": str(deploy_result.unwrap_err())
         })
+        error_detail = str(deploy_result.unwrap_err())
+        # eliminar prefijo 
+        if error_detail.startswith("["):
+            error_detail = error_detail.split("] ", 1)[-1]
+
         raise HTTPException(
-            status_code=500,
-            detail=f"Failed to deploy endpoint: {endpoint_id} - {deploy_result.unwrap_err()}"
+            status_code=429, 
+            detail=error_detail
         )
 
     deploy_response = deploy_result.unwrap()
