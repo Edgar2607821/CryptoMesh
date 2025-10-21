@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import uvicorn
+# import uvicorn
 import cryptomesh.controllers as Controllers
 from contextlib import asynccontextmanager
 from cryptomesh.db import connect_to_mongo,close_mongo_connection
@@ -32,11 +32,12 @@ async def lifespan(app: FastAPI):
     yield 
     await close_mongo_connection()
 
-app = FastAPI(title=config.CRYPTOMESH_TITLE,lifespan=lifespan)
+app               = FastAPI(title=config.CRYPTOMESH_TITLE,lifespan=lifespan)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","*"],            # exact matches only, use ["*"] to allow all (not recommended in prod)
-    allow_credentials=True,           # allows cookies, Authorization headers, etc.
+    allow_origins=config.CRYPTOMESH_CORS_ORIGINS,            # exact matches only, use ["*"] to allow all (not recommended in prod)
+    allow_credentials=config.CRYPTOMESH_CORS_ALLOW_CREDENTIALS,           # allows cookies, Authorization headers, etc.
     allow_methods=["*"],              # HTTP methods allowed (GET, POST, etc.)
     allow_headers=["*"],              # HTTP request headers allowed
 )
@@ -56,6 +57,6 @@ app.include_router(Controllers.function_state_router, prefix=config.CRYPTOMESH_A
 app.include_router(Controllers.function_result_router, prefix=config.CRYPTOMESH_API_PREFIX, tags=["Function Result"])
 app.include_router(Controllers.choreography_router, prefix=config.CRYPTOMESH_API_PREFIX, tags=["Choreogaphy_Run"])
 
-if __name__ == "__main__":
-    uvicorn.run(app, host=config.CRYPTOMESH_HOST, port=config.CRYPTOMESH_PORT)
+# if __name__ == "__main__":
+#     uvicorn.run(app, host=config.CRYPTOMESH_HOST, port=config.CRYPTOMESH_PORT)
 

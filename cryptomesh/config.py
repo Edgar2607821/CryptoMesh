@@ -19,6 +19,8 @@ CRYPTOMESH_VERSION                    = os.environ.get("CRYPTOMESH_VERSION", "1.
 CRYPTOMESH_ENDPOINT_REQ_RES_BASE_PORT = int(os.environ.get("CRYPTOMESH_ENDPOINT_REQ_RES_BASE_PORT", "40000"))
 CRYPTOMESH_ENDPOINT_PUBSUB_BASE_PORT  = int(os.environ.get("CRYPTOMESH_ENDPOINT_PUBSUB_BASE_PORT", "50000"))
 CRYPTOMESH_DEBUG                      = bool(int(os.environ.get("CRYPTOMESH_DEBUG", "1")))
+CRYPTOMESH_CORS_ORIGINS              = os.environ.get("CRYPTOMESH_CORS_ORIGINS","https://muyal.tamps.cinvestav.mx").split(",")
+CRYPTOMESH_CORS_ALLOW_CREDENTIALS     = bool(int(os.environ.get("CRYPTOMESH_CORS_ALLOW_CREDENTIALS","1")))
 
 SHIELDX_API_PREFIX = os.environ.get("SHIELDX_API_PREFIX", "/api/v1")
 SHIELDX_HOST       = os.environ.get("SHIELDX_HOST", "localhost")

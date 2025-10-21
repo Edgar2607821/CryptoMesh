@@ -69,13 +69,12 @@ class ChoreographyRunService:
         try:
 
             response = await self.client.run_choreography(enriched_graph)
-
             L.info({
                 "event": "CHOREOGRAPHY.SENT_TO_SHIELDX",
                 "nodes": len(enriched_graph.vertices),
                 "status": "ok"
             })
-            print(json.dumps(enriched_graph.model_dump(by_alias=True, exclude_none=True), indent=2))
+            # print(json.dumps(enriched_graph.model_dump(by_alias=True, exclude_none=True), indent=2))
 
             return response
         except Exception as e:
